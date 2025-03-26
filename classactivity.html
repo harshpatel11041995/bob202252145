@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    .error { color: red; font-size: 0.875em; }
+  </style>
+</head>
+<body>
+   
+  <!-- Login Page -->
+  <div class="container mt-5" id="loginPage">
+    <div class="col-md-4 offset-md-4">
+      <h2 class="text-center">Login</h2>
+      <form id="loginForm" onsubmit="return validateLogin()">
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-control" id="loginUsername">
+          <div class="error" id="loginUsernameError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="loginPassword">
+          <div class="error" id="loginPasswordError"></div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+      </form>
+      <p class="mt-3 text-center"><a href="#" onclick="showSignup()">Not having an account? Click here to signup</a></p>
+    </div>
+  </div>
+   
+  <!-- Signup Page -->
+  <div class="container mt-5" id="signupPage" style="display:none;">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center">Signup</h2>
+      <form id="signupForm" onsubmit="return validateSignup()">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName">
+            <div class="error" id="firstNameError"></div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName">
+            <div class="error" id="lastNameError"></div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Date of Birth</label>
+          <input type="date" class="form-control" id="dob">
+          <div class="error" id="dobError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Mobile</label>
+          <input type="text" class="form-control" id="mobile">
+          <div class="error" id="mobileError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" id="email">
+          <div class="error" id="emailError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea class="form-control" id="address"></textarea>
+          <div class="error" id="addressError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Gender</label><br>
+          <input type="radio" name="gender" value="Male"> Male
+          <input type="radio" name="gender" value="Female"> Female
+          <div class="error" id="genderError"></div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Hobbies</label><br>
+          <input type="checkbox" name="hobbies" value="Reading"> Reading
+          <input type="checkbox" name="hobbies" value="Traveling"> Traveling
+          <input type="checkbox" name="hobbies" value="Gaming"> Gaming
+          <input type="checkbox" name="hobbies" value="Cooking"> Cooking
+          <input type="checkbox" name="hobbies" value="Photography"> Photography
+          <input type="checkbox" name="hobbies" value="Music"> Music
+          <div class="error" id="hobbiesError"></div>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Signup</button>
+      </form>
+    </div>
+  </div>
+   
+  <script>
+   
+     
+    function showSignup() {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('signupPage').style.display = 'block';
+    }
+    ClassicEditor.create(document.querySelector('#address'))
+    .catch(error => console.error(error));
+    
+    function validateLogin(){
+
+      let username = document.getElementById('loginUsername').value;
+      let password = document.getElementById('loginPassword').value;
+
+      document.getElementById('loginUsernameError').innerText = username ? '' : 'Username is required';
+      document.getElementById('loginPasswordError').innerText = password ? '' : 'Password is required';
+      return username && password;
+    }
+
+    function validateSignup(){
+
+          function showError(id , condition, message){
+            document.getElementById(id).innerText = condition ? '' : message
+            return condition;
+          }
+    
+
+    return showError('firstNameError', document.getElementById('firstName').value, 'First Name is required') &
+          showError('lastNameError', document.getElementById('lastName').value, 'Last Name is required') &
+          showError('dobError', document.getElementById('dob').value, 'Date of Birth is required') &
+          showError('mobileError', document.getElementById('mobile').value, 'Mobile number is required') &
+          showError('emailError', document.getElementById('email').value, 'Email is required') &
+          showError('addressError', document.querySelector('#address').value.trim(), 'Address is required') &
+          showError('genderError', document.querySelector('input[name="gender"]:checked'), 'Gender is required') &
+          showError('hobbiesError', document.querySelectorAll('input[name="hobbies"]:checked').length > 0, 'Select at least one hobby');
+    }
+
+  </script>
+</body>
+</html>
